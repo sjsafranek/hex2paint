@@ -35,6 +35,4 @@ def color_search(color_hex=None):
 flask run --host=0.0.0.0
 
 
-https://www.benjaminmoore.com/en-us/paint-colors/color/csp-830/peaceful-garden
-
 '''

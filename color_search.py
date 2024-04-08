@@ -1,6 +1,8 @@
 import math
 import numpy
 import pandas
+import argparse
+
 
 _df = pandas.read_csv('data/paint_colors.csv', encoding='utf-8')
 
@@ -31,8 +33,17 @@ def search(desired_color_hex, weighted=False, matches=1):
 	return [row[1].to_dict() for row in df.head(matches).iterrows()]
 
 
-
-
+if __name__ == '__main__':
+	parser = argparse.ArgumentParser(
+                    prog='FindMePaint',
+                    description='Converts hex color codes to paint colors',
+                    epilog='Happy searching!!')
+	parser.add_argument('-c', '--color', type=str, required=True, help="hex color code to search for")
+	parser.add_argument('-m', '--matches', type=int, default=1, help="number of matches")
+	parser.add_argument('-w', '--weighted', action='store_true', help="apply weighting to color distance algorithm")
+	args = parser.parse_args()
+	for color in search(args.color, weighted=args.weighted, matches=args.matches):
+		print(color)
 
 
 # colors = [
@@ -43,13 +54,3 @@ def search(desired_color_hex, weighted=False, matches=1):
 # 	'#4a303d',
 # 	'#af7180'
 # ]
-
-# print("Weighted")
-# for color in colors:
-# 	result = search(color, weighted=False)
-# 	print(f'{color} {result['name']} ({result['code']})')
-
-# print("Unweighted")
-# for color in colors:
-# 	result = search(color, weighted=True)
-# 	print(f'{color} {result['name']} ({result['code']})')

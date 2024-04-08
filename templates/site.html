@@ -69,9 +69,11 @@
               <div class="color-search"style="background-color: {{default_color}}"></div>
             </div>
             <h5 class="card-title">
-                {{ color['name'].title() }}
+                {{ color['name'].title() }} ({{ color['code'] }})
             </h5>
-            <h6>{{ color['code'] }}</h6>
+            <h6>
+              {{color['source']}}
+            </h6>
             <p class="card-text">
               {{color['distance']}}<br>
               <a href="{{color['link']}}" target="_blank">link</a>

@@ -1,10 +1,14 @@
+import os.path
 import logging
+from functools import reduce
 from flask import Flask
 from flask import request
 from flask import render_template
+from flask import send_from_directory
 
 from paint_search import search
 from paint_search import getSources
+
 
 # Initialize logging
 logging.basicConfig(
@@ -15,7 +19,17 @@ logging.basicConfig(
 )
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
+
+@app.route('/favicon.ico')
+def favicon():
+    file = reduce(os.path.join, [app.root_path, 'static', 'images'])
+    logging.debug('favicon', file)
+    return send_from_directory(
+            file,
+            'favicon.ico',
+            mimetype='image/vnd.microsoft.icon'
+        )
 
 @app.route("/", methods=['GET'])
 @app.route("/<color_hex>", methods=['GET', 'POST'])

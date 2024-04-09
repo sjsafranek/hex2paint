@@ -4,6 +4,9 @@ import math
 import pandas
 import argparse
 
+# https://en.wikipedia.org/wiki/Color_difference
+# https://stackoverflow.com/questions/1847092/given-an-rgb-value-what-would-be-the-best-way-to-find-the-closest-match-in-the-d
+
 files = glob.glob(os.path.join('data', '*.csv'))
 _df = pandas.concat(
     (pandas.read_csv(file, encoding='utf-8') for file in files), 
@@ -14,16 +17,15 @@ def getSources():
     return list(_df['source'].unique())
 
 def hex_to_rgb(value):
-    value = value.lstrip('#')
-    lv = len(value)
-    return tuple(int(value[i:i + lv // 3], 16) for i in range(0, lv, lv // 3))
+    h = value.lstrip('#')
+    lv = len(h)
+    return tuple(int(h[i:i + lv // 3], 16) for i in range(0, lv, lv // 3))
+    # return tuple(int(h[i:i+2], 16) for i in (0, 2, 4))
 
 def rgb_to_hex(rgb):
     return '#%02x%02x%02x' % rgb
 
-def calculate_color_distance(color1_hex, color2_hex, weighted=False):
-    # https://en.wikipedia.org/wiki/Color_difference
-    # https://stackoverflow.com/questions/1847092/given-an-rgb-value-what-would-be-the-best-way-to-find-the-closest-match-in-the-d
+def euclidean_distance(color1_hex, color2_hex, weighted=False):
     color1 = hex_to_rgb(color1_hex)
     color2 = hex_to_rgb(color2_hex)
     # Euclidean Distance (Unweighted)
@@ -32,10 +34,15 @@ def calculate_color_distance(color1_hex, color2_hex, weighted=False):
     # Euclidean Distance (Weighted)
     return math.sqrt(((color2[0]-color1[0])*0.30)**2 + ((color2[1]-color1[1])*0.59)**2 + ((color2[2]-color1[2])*0.11)**2)
 
+def calculate_color_distance(color1_hex, color2_hex, weighted=False, algorithm='euclidean'):
+    if 'euclidean' == algorithm:
+        return euclidean_distance(color1_hex, color2_hex, weighted=weighted)
+    else:
+        raise ValueError(f"Unsupported Algorithm = '{algorithm}'")
+
 def search(desired_color_hex, weighted=False, matches=1, sources=[]):
     df = _df.copy()
     if len(sources):
-        print(sources)
         df = df[df['source'].isin(sources)]
     df['distance'] = df.apply(lambda row: calculate_color_distance(desired_color_hex, row['color_hex'], weighted=weighted), axis=1)
     return [row[1].to_dict() for row in df.sort_values('distance').head(matches).iterrows()]

@@ -1,0 +1,14 @@
+{% with errors = get_flashed_messages(category_filter=["warning"]) %}
+{% if errors %}
+<div class="row mt-2">
+  {%- for message in errors %}
+  <div class="col-auto ms-2 me-2">
+    <div class="alert alert-warning d-flex align-items-center" role="alert">
+      <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+      <div>{{ message }}</div>
+    </div>
+  </div>
+  {% endfor -%}
+</div>
+{% endif %}
+{% endwith %}

@@ -1,0 +1,24 @@
+<form class="d-flex" method="post" action="/">
+
+  <div class="col-auto ms-2 me-2">
+    <div id="colorInputContainer" class="input-group" value="{{color}}" title="Choose your color">
+      <input id="colorInput" type="text" class="form-control" value="{{color}}" name="color" />
+      <span class="input-group-text colorpicker-input-addon"><i></i></span>
+    </div>
+  </div>
+
+  <div class="col-auto ms-2 me-2">
+    {% if sources %}
+    <select id="sources" class="form-select form-control w-auto" name="sources" multiple size="3">
+      {% for source in sources %}
+      <option value="{{source}}">{{source}}</option>
+      {% endfor %}
+    </select>
+    {% endif %}
+  </div>
+
+  <div class="col-auto ms-4">
+    <button type="submit" class="btn btn-primary">Find me paint!!</button>
+  </div>
+
+</form>

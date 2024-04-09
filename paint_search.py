@@ -40,11 +40,11 @@ def calculate_color_distance(color1_hex, color2_hex, weighted=False, algorithm='
     else:
         raise ValueError(f"Unsupported Algorithm = '{algorithm}'")
 
-def search(desired_color_hex, weighted=False, matches=1, sources=[]):
+def search(desired_color_hex, weighted=False, matches=1, sources=[], algorithm='euclidean', **kwargs):
     df = _df.copy()
     if len(sources):
         df = df[df['source'].isin(sources)]
-    df['distance'] = df.apply(lambda row: calculate_color_distance(desired_color_hex, row['color_hex'], weighted=weighted), axis=1)
+    df['distance'] = df.apply(lambda row: calculate_color_distance(desired_color_hex, row['color_hex'], weighted=weighted, algorithm=algorithm), axis=1)
     return [row[1].to_dict() for row in df.sort_values('distance').head(matches).iterrows()]
 
 
@@ -60,12 +60,3 @@ if __name__ == '__main__':
     for color in search(args.color, weighted=args.weighted, matches=args.matches):
         print(color)
 
-
-# colors = [
-#     '#ebe7ce',
-#     '#bfcc96',
-#     '#5c6b4c',
-#     '#2e3641',
-#     '#4a303d',
-#     '#af7180'
-# ]

@@ -10,7 +10,8 @@ from flask import send_from_directory
 
 from api import ApiResponse
 from paint_search import search
-from paint_search import getSources
+from paint_search import getBrands
+from paint_search import getColorSpaces
 from utils import getParametersFromRequest
 
 
@@ -49,9 +50,12 @@ def paint_search():
     if 'POST' == request.method:
         if not color:
             flash('Color is required!', 'error')
-        print(color)
         color = color.lstrip('#')
-        return redirect(f'/?color={color}&sources={','.join(params.get('sources'))}&matches={params.get('matches')}&algorithm={params.get('algorithm')}')
+        brands = ','.join(params.get('brands'))
+        matches = params.get('matches')
+        algorithm = params.get('algorithm')
+        color_space = params.get('color_space').lower()
+        return redirect(f'/?color={color}&brands={brands}&matches={matches}&algorithm={algorithm}&color_space={color_space}')
 
     # Search for matching paints if needed
     paints = None
@@ -65,7 +69,8 @@ def paint_search():
         'site.html', 
         paints = paints, 
         color = color or '#563d7c', 
-        sources=getSources()
+        brands=getBrands(),
+        color_spaces=getColorSpaces()
     )
 
 

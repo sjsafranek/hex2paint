@@ -11,17 +11,17 @@ def _getParametersFromForm(request):
     if not request.form or 0 == len(request.form.keys()):
         return {}
     form = dict(request.form)
-    if request.form.getlist('sources'):
-        form['sources'] = request.form.getlist('sources')
+    if request.form.getlist('brands'):
+        form['brands'] = request.form.getlist('brands')
     return form
 
 def _getParametersFromUrlArgs(request):
     if not request.args or 0 == len(request.args.keys()):
         return {}
     args = dict(request.args)
-    if None != args.get('sources'):
-        args['sources'] = [
-            source for source in args.get('sources', '').split(',') if source
+    if None != args.get('brands'):
+        args['brands'] = [
+            source for source in args.get('brands', '').split(',') if source
         ]
     if args.get('matches'):
         args['matches'] = int(args.get('matches'))

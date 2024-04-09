@@ -16,6 +16,8 @@ convert hex color code to paint color
 
 
 
+ pip install scikit-image
+
 
 '''
 

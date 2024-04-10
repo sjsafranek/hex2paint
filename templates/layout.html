@@ -13,20 +13,41 @@
     <title>Find Me Paint</title>
 
     <!-- <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}"> -->
-    <link rel="shortcut icon" type="image/x-icon" href="/static/images/favicon.ico">
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="/static/images/favicon.ico"> -->
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png" sizes="180x180">
+    <link rel="icon" href="/static/images/favicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="/static/images/favicon-16x16.png" sizes="16x16" type="image/png">
+    <!-- <link rel="manifest" href="/static/manifest.json"> -->
+    <link rel="icon" href="/static/images/favicon.ico">
+
+    <style>
+      
+      body {
+        padding-top: 80px;
+      }
+
+    </style>
 
     {% block style %} {% endblock %}
 
   </head>
   <body>
 
+<main>
+
     {% include 'navbar.html' %}
 
     {% include 'icons.html' %}
 
-    <div class="container">
+    <div class="container py-4">
+
       {% block content %} {% endblock %}
+
     </div>
+
+</main>
 
     <!-- Optional JavaScript; choose one of the two! -->
 

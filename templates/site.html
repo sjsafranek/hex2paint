@@ -23,58 +23,58 @@
 
 {% block content %}
 
-  <h1 class="mt-5">Find Me Paint</h1>
-  <p class="lead">
-    Convert hex color codes to paint colors!! 
-    This tool uses a euclidean distance calculation within the RGB color space to find you the closest paint color.
-    Read more at <a href="https://en.wikipedia.org/wiki/Color_difference" target="_blank">https://en.wikipedia.org/wiki/Color_difference</a>.
-  </p>
-  <p>
-    Check out the code at
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
-      <use xlink:href="#GitHubIcon"/>
-    </svg>
-    <a href="https://github.com/sjsafranek/hex2paint" target="_blank">GitHub</a>. 
-  </p>
-
-  {% include 'errors.html' %}
-  {% include 'warnings.html' %}
-
-  <div class="row mt-2">
-    {% include 'form.html' %}
+  <div class="row">
+    <p class="lead">
+      Convert hex color codes to paint colors!! 
+      This tool finds you the closest paint color by the euclidean distance within a selected color space.
+    </p>
+    <p>
+      Read more at <a href="https://en.wikipedia.org/wiki/Color_difference" target="_blank">https://en.wikipedia.org/wiki/Color_difference</a>.
+    </p>
+    {% include 'errors.html' %}
+    {% include 'warnings.html' %}
   </div>
 
-  {% if paints %}
-  <div class="row mt-4">
-    {% for paint in paints %}
-    <div class="col-auto">
-      <div class="card mb-4" style="width: 18rem;">
-      <!-- <div class="card"> -->
-        <div class="card-body">
-          <div class="color-tile-container">
-            <div class="color-tile" style="background-color: {{paint['color_hex']}}"></div>
-            <div class="color-search"style="background-color: {{color}}"></div>
-          </div>
-          <h5 class="card-title">
-              {{ paint['name'].title() }} ({{ paint['code'] }})
-          </h5>
-          <h6>
-            {{paint['source']}}
-          </h6>
-          <p class="card-text">
-            {{paint['distance']}}<br>
-            <a href="{{paint['link']}}" target="_blank">link</a>
-          </p>
-        </div>
-      </div>
+  <div class="row mt-2 gx-5">
+
+    <div class="col-3 mt-4">
+      {% include 'form.html' %}
     </div>
-    {% endfor %}
+
+    <div class="col-9">
+      {% if paints %}
+      <div class="row mt-4">
+        {% for paint in paints %}
+        <div class="col-auto">
+          <div class="card mb-4" style="width: 18rem;">
+          <!-- <div class="card"> -->
+            <div class="card-body">
+              <div class="color-tile-container">
+                <div class="color-tile" style="background-color: {{paint['color_hex']}}"></div>
+                <div class="color-search"style="background-color: {{color}}"></div>
+              </div>
+              <h5 class="card-title">
+                  {{ paint['name'].title() }} ({{ paint['code'] }})
+              </h5>
+              <h6>
+                {{paint['source']}}
+              </h6>
+              <p class="card-text">
+                {{paint['distance']}}<br>
+                <a href="{{paint['link']}}" target="_blank">link</a>
+              </p>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      {% endif %}
+    </div>
+
   </div>
-  {% else %}
-  {% endif %}
 
 {% endblock %}
-
 
 
 

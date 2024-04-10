@@ -1,37 +1,64 @@
-<form class="d-flex" method="post" action="/">
 
-  <div class="col-auto ms-2 me-2">
-    <label>Color</label>
-    <div id="colorInputContainer" class="input-group" value="{{color}}" title="Choose your color">
-      <input id="colorInput" type="text" class="form-control" value="{{color}}" name="color" />
-      <span class="input-group-text colorpicker-input-addon"><i></i></span>
-    </div>
+<!-- <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="width: 380px;"> -->
+  <div>
+    <a>
+      <span class="fs-3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 16 16">
+          <use xlink:href="#funnel"/>
+        </svg>
+        Filter
+      </span>
+    </a>
   </div>
 
-{% if brands %}
-  <div class="col-auto ms-2 me-2">
-    <label>Brands</label>
-    <select id="brands" class="form-select form-control w-auto" name="brands" multiple size="3">
-      {% for brand in brands %}
-      <option value="{{brand}}">{{brand}}</option>
-      {% endfor %}
-    </select>
-  </div>
-{% endif %}
+  <div class="scrollarea">
+    <form method="post" action="/">
 
-{% if color_spaces %}
-  <div class="col-auto ms-2 me-2">
-    <label>Color Space</label>
-    <select id="color_space" class="form-select form-control w-auto" name="color_space" size="3">
-      {% for color_space in color_spaces %}
-      <option value="{{color_space}}">{{color_space}}</option>
-      {% endfor %}
-    </select>
-  </div>
-{% endif %}
+      <div class="row mt-2">
+        <div class="col">
+          <label>Color</label>
+          <div id="colorInputContainer" class="input-group" value="{{color}}" title="Choose your color">
+            <input id="colorInput" type="text" class="form-control" value="{{color}}" name="color" />
+            <span class="input-group-text colorpicker-input-addon"><i></i></span>
+          </div>
+        </div>
+      </div>
 
-  <div class="col-auto ms-4">
-    <button type="submit" class="btn btn-primary">Find me paint!!</button>
+    {% if brands %}
+      <div class="row mt-2">
+        <div class="col">
+          <label>Brands</label>
+          <select id="brands" class="form-select form-control" name="brands" multiple size="3">
+            {% for brand in brands %}
+            <option value="{{brand}}">{{brand}}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    {% endif %}
+
+    {% if color_spaces %}
+      <div class="row mt-2">
+        <div class="col">
+          <label>Color Space</label>
+          <select id="color_space" class="form-select form-control" name="color_space" size="3">
+            {% for color_space in color_spaces %}
+            <option value="{{color_space}}">{{color_space}}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    {% endif %}
+
+      <div class="row mt-4">
+        <div class="col">
+          <div class="d-grid">
+            <button type="submit" class="btn btn-primary">Find me paint!!</button>
+          </div>
+        </div>
+      </div>
+
+    </form>
   </div>
 
-</form>
+<!-- </div> -->

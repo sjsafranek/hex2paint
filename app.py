@@ -5,6 +5,7 @@ from flask import Flask
 from flask import flash
 from flask import request
 from flask import redirect
+from flask import url_for
 from flask import render_template
 from flask import send_from_directory
 
@@ -40,7 +41,7 @@ def favicon():
 
 
 @app.route("/", methods=['GET', 'POST'])
-def paint_search():
+def index():
 
     # Search Parameters
     params = getParametersFromRequest(request)
@@ -90,3 +91,9 @@ def paint_search_api():
         }, 
         params=params
     )
+
+
+
+@app.errorhandler(404)
+def error_handler_404(error):
+    return redirect(url_for('index'))

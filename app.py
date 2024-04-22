@@ -41,7 +41,7 @@ def favicon():
 
 
 @app.route("/", methods=['GET', 'POST'])
-def index():
+def index_handler():
 
     # Search Parameters
     params = getParametersFromRequest(request)
@@ -76,7 +76,7 @@ def index():
 
 
 @app.route("/api", methods=['GET', 'POST'])
-def paint_search_api():
+def api_handler():
     params = getParametersFromRequest(request)
 
     color = params.get('color')
@@ -93,7 +93,6 @@ def paint_search_api():
     )
 
 
-
 @app.errorhandler(404)
 def error_handler_404(error):
-    return redirect(url_for('index'))
+    return redirect(url_for('index_handler'))

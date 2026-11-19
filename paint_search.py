@@ -11,15 +11,16 @@ import skimage.color
 # https://stackoverflow.com/questions/1847092/given-an-rgb-value-what-would-be-the-best-way-to-find-the-closest-match-in-the-d
 # https://www.baeldung.com/cs/compute-similarity-of-colours
 
-
-files = glob.glob(os.path.join('data', '*.csv'))
-_df = pandas.concat(
-    (pandas.read_csv(file, encoding='utf-8') for file in files), 
-    ignore_index=True
-)
+def load_dataframe():
+    files = glob.glob(os.path.join('data', '*.csv'))
+    return pandas.concat(
+        (pandas.read_csv(file, encoding='utf-8') for file in files), 
+        ignore_index=True
+    )
 
 def getBrands():
-    return list(_df['source'].unique())
+    df = load_dataframe()
+    return list(df['source'].unique())
 
 def getColorSpaces():
     return ['RGB', 'LAB']
@@ -61,7 +62,7 @@ def calculate_color_distance(color1_hex, color2_hex, algorithm='euclidean', colo
 
 
 def search(desired_color_hex, matches=1, brands=[], algorithm='euclidean', color_space='RGB', **kwargs):
-    df = _df.copy()
+    df = load_dataframe()
     if brands and len(brands):
         df = df[df['source'].isin(brands)]
     df['distance'] = df.apply(lambda row: calculate_color_distance(desired_color_hex, row['color_hex'], algorithm=algorithm, color_space=color_space), axis=1)
